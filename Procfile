@@ -1,1 +1,1 @@
-web: ./target/release/person_registration_api
+web: ROCKET_PORT=$PORT ./target/release/person_registration_api
