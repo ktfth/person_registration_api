@@ -1,0 +1,1 @@
+web: ./target/release/person_registration_api
