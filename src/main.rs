@@ -3,12 +3,13 @@
 use rocket::serde::json::{Json};
 use rocket::serde::{Serialize};
 
-use person_registration::{Gen, Person, Juridic};
+use person_registration::{Gen, Person, Juridic, General};
 
 #[derive(Debug, PartialEq, FromFormField)]
 enum Kind {
     Physical,
-    Juridic
+    Juridic,
+    General,
 }
 
 #[derive(Serialize)]
@@ -43,6 +44,11 @@ fn registration(kind: Kind) -> Json<Registration> {
                 data: Juridic::generate(),
             })
         },
+        Kind::General => {
+            Json(Registration {
+                data: General::generate(),
+            })
+        }
     }
 }
 
