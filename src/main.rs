@@ -31,6 +31,7 @@ struct Registration {
 struct Register {
     registration: Json<Registration>,
     access_control_allow_origin: Header<'static>,
+    access_control_allow_headers: Header<'static>,
 }
 
 impl Register {
@@ -38,6 +39,7 @@ impl Register {
         Register {
             registration,
             access_control_allow_origin: Header::new("Access-Control-Allow-Origin", "*"),
+            access_control_allow_headers: Header::new("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"),
         }
     }
 }
@@ -73,24 +75,7 @@ fn registration(kind: Kind) -> Register {
 
 #[options("/?<kind>")]
 fn registration_options(kind: Kind) -> Register {
-    let output = match kind {
-        Kind::Physical => {
-            Json(Registration {
-                data: Person::generate(),
-            })
-        },
-        Kind::Juridic => {
-            Json(Registration {
-                data: Juridic::generate(),
-            })
-        },
-        Kind::General => {
-            Json(Registration {
-                data: General::generate(),
-            })
-        }
-    };
-    Register::new(output)
+    registration(kind)
 }
 
 #[launch]
